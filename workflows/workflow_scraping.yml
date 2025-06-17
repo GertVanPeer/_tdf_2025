@@ -1,0 +1,29 @@
+name: Daily Scrape
+
+on:
+  schedule:
+    #- cron: '0 6 * * *'  # 08:00 CEST = 06:00 UTC
+    - cron: '35-59 15 * * *'  # 17:35–17:59 CEST
+
+  workflow_dispatch:
+
+jobs:
+  run-scraper:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+      - name: Run scraper
+        run: python scraper.py
+      - name: Commit changes
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add data/startlijst.json
+          git commit -m "Update startlijst $(date)"
+          git push
