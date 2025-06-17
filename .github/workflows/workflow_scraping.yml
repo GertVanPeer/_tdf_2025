@@ -3,7 +3,7 @@ name: Daily Scrape
 on:
   schedule:
     #- cron: '0 6 * * *'  # 08:00 CEST = 06:00 UTC
-    - cron: '35-59 15 * * *'  # 17:35–17:59 CEST
+    - cron: '50-59 15 * * *'  # 17:50–17:59 CEST
 
   workflow_dispatch:
 
